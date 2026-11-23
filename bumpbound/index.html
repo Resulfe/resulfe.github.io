@@ -82,7 +82,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .store.soon:hover{transform:none}
 .free{font-weight:700;color:var(--muted);font-size:15px}
 .inapp{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;color:var(--muted);max-width:460px}
-.hero-shot{width:min(980px,100%);border-radius:22px;border:2px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 6px rgba(46,197,255,.06)}
+.hero-shot{width:min(980px,100%);height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:22px;border:2px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 6px rgba(46,197,255,.06)}
 
 /* modes */
 .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:22px}
@@ -92,6 +92,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .mode h3{font-size:28px}
 .mode.bump h3{color:var(--blue)} .mode.foot h3{color:var(--orange)}
 .mode p{color:var(--muted)}
+
+/* football gallery */
+.fgal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
+.fgal figure{margin:0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--panel);position:relative}
+.fgal img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.fgal figcaption{position:absolute;left:12px;bottom:12px;background:rgba(5,7,23,.78);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800;font-size:14px}
+.fgal figcaption b{color:var(--orange);font-weight:800}
 
 /* trailer */
 .trailer{position:relative;display:block;border-radius:22px;overflow:hidden;border:2px solid var(--line);max-width:900px}
@@ -186,6 +193,22 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
           <p data-i18n="footText">Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.</p>
         </div>
       </article>
+    </div>
+  </div>
+</section>
+
+<section id="football">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="fbEyebrow">Car football</span>
+      <h2 data-i18n="fbTitle">Goals, crashes, fireworks</h2>
+      <p data-i18n="fbLede">Play on the Street Cage between brick walls and shipping containers. Every goal ends in a show.</p>
+    </div>
+    <div class="fgal">
+      <figure><img src="img/football/street_goal.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capGoal">Goal!</span></figcaption></figure>
+      <figure><img src="img/football/street_duel.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capDuel">Fight for the ball</span></figcaption></figure>
+      <figure><img src="img/football/street_shock.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capShock">Power-ups on the pitch</span></figcaption></figure>
+      <figure><img src="img/football/street_fireworks.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capFire">Goal celebration</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -308,6 +331,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
       modesEyebrow:"Two ways to play",modesTitle:"Smash or score",
       bumpTitle:"Bumper Battle",bumpText:"Ram rivals, chain combos and push them off the edge. Jump pads, hazards and power-ups change every fight across 9 arenas.",
       footTitle:"Mini Football",footText:"Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.",
+      fbEyebrow:"Car football",fbTitle:"Goals, crashes, fireworks",fbLede:"Play on the Street Cage between brick walls and shipping containers. Every goal ends in a show.",capGoal:"Goal!",capDuel:"Fight for the ball",capShock:"Power-ups on the pitch",capFire:"Goal celebration",
       trailerEyebrow:"Watch",trailerTitle:"See it in motion",trailerNote:"Opens on YouTube.",
       shotsEyebrow:"Take a look",shotsTitle:"Screenshots",
       insideEyebrow:"What's inside",insideTitle:"Plenty to unlock",
@@ -334,6 +358,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
       modesEyebrow:"İki oyun modu",modesTitle:"Çarp ya da gol at",
       bumpTitle:"Çarpışma Savaşı",bumpText:"Rakiplerine çarp, kombo yap ve onları kenardan düşür. Zıplama rampaları, tehlikeler ve güçlendirmeler 9 arenada her maçı değiştirir.",
       footTitle:"Mini Futbol",footText:"90 saniyelik maçlarda araba futbolu. Topu kaleye sür. Berabere biterse sıradaki gol kazandırır.",
+      fbEyebrow:"Araba futbolu",fbTitle:"Goller, çarpışmalar, havai fişekler",fbLede:"Tuğla duvarlar ve konteynerler arasındaki Sokak Kafesi'nde oyna. Her gol bir şova dönüşür.",capGoal:"Gol!",capDuel:"Top için kapış",capShock:"Sahada güçlendirmeler",capFire:"Gol kutlaması",
       trailerEyebrow:"İzle",trailerTitle:"Oyunu iş başında gör",trailerNote:"YouTube'da açılır.",
       shotsEyebrow:"Bir göz at",shotsTitle:"Ekran görüntüleri",
       insideEyebrow:"İçinde neler var",insideTitle:"Açılacak çok şey var",
