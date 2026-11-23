@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viral Run: Catch Them All</title>
+<meta name="description" content="Chase them. Bonk them. Make them lose it! A fast arcade chase game with 200 levels, 10 crazy characters and 10 bosses. Free on iPhone and Android.">
+<meta name="theme-color" content="#2a0f5c">
+<link rel="icon" href="img/icon-64.png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Viral Run: Catch Them All">
+<meta property="og:description" content="Chase them. Bonk them. Make them lose it! Free on iPhone and Android.">
+<meta property="og:image" content="https://resulfe.github.io/viralrun/img/og.jpg">
+<meta property="og:url" content="https://resulfe.github.io/viralrun/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-itunes-app" content="app-id=6825478642">
+<style>
+@font-face{font-family:"Lilita";src:url(fonts/lilita-latin.woff2) format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Lilita";src:url(fonts/lilita-ext.woff2) format("woff2");font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Nunito";src:url(fonts/nunito-latin.woff2) format("woff2");font-weight:200 1000;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Nunito";src:url(fonts/nunito-ext.woff2) format("woff2");font-weight:200 1000;font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
+  --ink:#1b0a3d; --ink2:#2a0f5c; --panel:#341675; --panel2:#3f1c8a;
+  --text:#fff; --soft:#d9ccff; --yellow:#ffd23f; --orange:#ff8a1f; --pink:#ff3d7f; --cyan:#3fd0ff; --green:#5be37d;
+  --r:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--text);font-family:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:600;line-height:1.55;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:var(--yellow)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+h1,h2,h3,.display{font-family:"Lilita",Impact,"Arial Black",sans-serif;font-weight:400;letter-spacing:.5px;line-height:1.05;margin:0}
+h2{font-size:clamp(34px,6vw,56px);text-align:center;margin-bottom:12px;text-shadow:0 4px 0 rgba(0,0,0,.25)}
+.lead{text-align:center;color:var(--soft);max-width:640px;margin:0 auto 40px;font-size:18px}
+section{padding:88px 0;position:relative}
+
+/* language: show only the active language */
+[data-lang="en"] [lang="tr"],[data-lang="tr"] [lang="en"]{display:none!important}
+
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .25s,box-shadow .25s;padding-top:env(safe-area-inset-top)}
+header.solid{background:rgba(27,10,61,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+.bar{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;font-family:"Lilita",sans-serif;font-size:22px}
+.brand img{width:38px;height:38px;border-radius:10px}
+nav{margin-left:auto;display:flex;gap:22px}
+nav a{color:#fff;text-decoration:none;font-weight:800;font-size:15px;opacity:.85}
+nav a:hover{opacity:1;color:var(--yellow)}
+.langs{display:flex;background:rgba(255,255,255,.12);border-radius:99px;padding:3px}
+.langs button{border:0;background:none;color:#fff;font:800 13px "Nunito",sans-serif;padding:6px 11px;border-radius:99px;cursor:pointer}
+.langs button.on{background:var(--yellow);color:var(--ink)}
+@media(max-width:720px){nav{display:none}.langs{margin-left:auto}}
+
+/* hero */
+.hero{min-height:min(100vh,900px);min-height:min(100svh,900px);padding:110px 0 70px;display:flex;align-items:center;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 70% 40%,rgba(255,138,31,.55),transparent 55%),
+    radial-gradient(ellipse at 20% 80%,rgba(255,61,127,.45),transparent 50%),
+    linear-gradient(160deg,#4b1ba8 0%,#2a0f5c 55%,#1b0a3d 100%)}
+.burst{position:absolute;inset:-50%;background:repeating-conic-gradient(from 0deg at 68% 45%,rgba(255,255,255,.06) 0 6deg,transparent 6deg 18deg);animation:spin 80s linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.speed{position:absolute;height:4px;border-radius:4px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.7));animation:zip 1.6s linear infinite;pointer-events:none}
+@keyframes zip{from{transform:translateX(-30vw);opacity:0}20%{opacity:1}to{transform:translateX(120vw);opacity:0}}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;width:100%}
+.hero .wrap>*{min-width:0}
+.logo{width:min(460px,100%);height:auto;filter:drop-shadow(0 12px 24px rgba(0,0,0,.35));animation:bob 3.2s ease-in-out infinite;transform-origin:50% 80%}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+.tag{font-family:"Lilita",sans-serif;font-size:clamp(28px,4.4vw,46px);line-height:1.1;margin:18px 0 10px;text-shadow:0 4px 0 rgba(0,0,0,.3)}
+.tag .y{color:var(--yellow)}.tag .c{color:var(--cyan)}.tag .p{color:var(--pink)}
+.sub{font-size:18px;color:var(--soft);max-width:520px;margin:0 0 26px}
+.badges{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.badges a{display:block;transition:transform .15s}
+.badges a:hover{transform:translateY(-3px) scale(1.03)}
+.badges img{height:58px;width:auto}
+.badges .apple img{height:58px}
+.free{margin-top:14px;font-weight:800;color:var(--green);font-size:15px}
+.inapp{display:none;margin-top:12px;background:rgba(255,255,255,.1);border-radius:12px;padding:10px 14px;font-size:14px;color:var(--soft);max-width:460px}
+.inapp.show{display:block}
+
+.phone{justify-self:center;position:relative;width:min(300px,78vw);aspect-ratio:9/19.5;border-radius:44px;padding:12px;background:#0d0620;
+  box-shadow:0 0 0 3px #5a3aa8,0 30px 60px rgba(0,0,0,.5),0 0 80px rgba(255,138,31,.35);transform:rotate(4deg);animation:tilt 6s ease-in-out infinite}
+@keyframes tilt{0%,100%{transform:rotate(4deg) translateY(0)}50%{transform:rotate(2deg) translateY(-12px)}}
+.phone video,.phone img{width:100%;height:100%;object-fit:cover;border-radius:34px;background:#222}
+.phone::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:80px;height:22px;background:#0d0620;border-radius:20px;z-index:2}
+.sticker{position:absolute;font-family:"Lilita",sans-serif;font-size:26px;padding:6px 14px;border-radius:14px;color:var(--ink);box-shadow:0 6px 0 rgba(0,0,0,.25);z-index:3;animation:pop 2.4s ease-in-out infinite}
+.sticker.s1{background:var(--yellow);top:12%;left:-18%;transform:rotate(-10deg)}
+.sticker.s2{background:var(--cyan);bottom:16%;right:-16%;transform:rotate(8deg);animation-delay:1.2s}
+@keyframes pop{0%,100%{scale:1}10%{scale:1.15}20%{scale:1}}
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;text-align:center}
+  .logo{margin:0 auto;width:min(310px,82%)}.hero{padding-top:76px;min-height:0}.tag{margin-top:4px}.sub{font-size:16px}.badges{gap:10px}.badges img,.badges .apple img{height:46px}.sub{margin:0 auto 24px}.badges{justify-content:center}.inapp{margin:12px auto 0}
+  .phone{margin-top:20px;width:min(260px,70vw)}
+  .sticker{font-size:20px}.sticker.s1{left:-12%}.sticker.s2{right:-10%}
+}
+
+/* stats strip */
+.stats{background:var(--yellow);color:var(--ink);padding:0;overflow:hidden;transform:rotate(-1.5deg);margin:-14px -10px 0;box-shadow:0 8px 0 rgba(0,0,0,.2);position:relative;z-index:5}
+.ticker{display:flex;gap:48px;white-space:nowrap;padding:16px 0;animation:tick 28s linear infinite;width:max-content}
+.ticker span{font-family:"Lilita",sans-serif;font-size:26px}
+.ticker b{color:var(--pink);font-weight:400}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.step{background:var(--panel);border-radius:var(--r);padding:28px 24px;position:relative;box-shadow:0 8px 0 rgba(0,0,0,.25);transition:transform .2s}
+.step:hover{transform:translateY(-6px) rotate(-1deg)}
+.num{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-family:"Lilita",sans-serif;font-size:30px;color:var(--ink);margin-bottom:16px;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.step:nth-child(1) .num{background:var(--yellow)}.step:nth-child(2) .num{background:var(--cyan)}.step:nth-child(3) .num{background:var(--pink);color:#fff}
+.step h3{font-size:30px;margin-bottom:8px}
+.step p{margin:0;color:var(--soft)}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+
+/* gallery */
+.gallery-sec{background:linear-gradient(180deg,var(--ink) 0%,var(--ink2) 100%)}
+.gallery{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 20px 26px;scrollbar-width:thin;scrollbar-color:var(--panel2) transparent}
+.gallery img{flex:0 0 auto;width:min(640px,84vw);aspect-ratio:16/9;object-fit:cover;border-radius:18px;scroll-snap-align:center;box-shadow:0 10px 30px rgba(0,0,0,.4);border:3px solid rgba(255,255,255,.12)}
+.gal-nav{display:flex;justify-content:center;gap:12px}
+.gal-nav button{width:48px;height:48px;border-radius:50%;border:0;background:var(--panel2);color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.gal-nav button:hover{background:var(--yellow);color:var(--ink)}
+
+/* features */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{background:var(--panel);border-radius:var(--r);padding:24px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 6px 0 rgba(0,0,0,.22)}
+.ico{flex:0 0 52px;height:52px;border-radius:14px;display:grid;place-items:center}
+.ico svg{width:28px;height:28px;fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.feat h3{font-size:24px;margin-bottom:4px}
+.feat p{margin:0;color:var(--soft);font-size:15.5px}
+@media(max-width:960px){.feats{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.feats{grid-template-columns:1fr}}
+
+/* video */
+.trailer{max-width:860px;margin:0 auto;aspect-ratio:16/9;border-radius:20px;overflow:hidden;position:relative;background:#000 center/cover no-repeat;box-shadow:0 20px 50px rgba(0,0,0,.45);cursor:pointer;border:3px solid rgba(255,255,255,.12)}
+.trailer .play{position:absolute;inset:0;margin:auto;width:92px;height:92px;border-radius:50%;background:var(--pink);display:grid;place-items:center;box-shadow:0 8px 0 rgba(0,0,0,.3);transition:transform .15s}
+.trailer:hover .play{transform:scale(1.08)}
+.trailer .play::after{content:"";border-left:30px solid #fff;border-top:18px solid transparent;border-bottom:18px solid transparent;margin-left:8px}
+.trailer iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.trailer .note{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 3px #000;opacity:.85}
+
+/* faq */
+.faq{max-width:780px;margin:0 auto}
+details{background:var(--panel);border-radius:16px;margin-bottom:12px;padding:0 22px;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:800;font-size:18px;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:"Lilita",sans-serif;font-size:28px;line-height:1;color:var(--yellow);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0 0 18px;color:var(--soft)}
+
+/* cta */
+.cta{text-align:center;background:radial-gradient(ellipse at 50% 30%,rgba(255,138,31,.45),transparent 60%),linear-gradient(180deg,var(--ink2),#4b1ba8);overflow:hidden}
+.cta .icon{width:132px;height:132px;border-radius:30px;margin:0 auto 22px;box-shadow:0 14px 30px rgba(0,0,0,.4);animation:bob 3s ease-in-out infinite}
+.cta .badges{justify-content:center;margin-top:26px}
+
+footer{background:#12062b;padding:36px 0 calc(36px + env(safe-area-inset-bottom));color:var(--soft);font-size:14.5px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center;justify-content:space-between}
+footer nav{display:flex;flex-wrap:wrap;gap:10px 20px;margin:0}
+footer a{color:var(--soft);text-decoration:none}
+footer a:hover{color:var(--yellow)}
+.social{display:flex;gap:10px}
+.social a{width:40px;height:40px;border-radius:12px;background:var(--panel);display:grid;place-items:center}
+.social svg{width:20px;height:20px;fill:#fff}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header id="top-bar">
+  <div class="wrap bar">
+    <a class="brand" href="#"><img src="img/icon-64.png" alt="">Viral Run</a>
+    <nav>
+      <a href="#how"><span lang="en">How to play</span><span lang="tr">Nasıl oynanır</span></a>
+      <a href="#screens"><span lang="en">Screenshots</span><span lang="tr">Görseller</span></a>
+      <a href="#features"><span lang="en">Features</span><span lang="tr">Özellikler</span></a>
+      <a href="#faq"><span lang="en">FAQ</span><span lang="tr">SSS</span></a>
+    </nav>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-set="en">EN</button><button type="button" data-set="tr">TR</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="burst"></div>
+  <div class="speed" style="top:18%;width:180px;animation-delay:.2s"></div>
+  <div class="speed" style="top:46%;width:260px;animation-delay:.9s"></div>
+  <div class="speed" style="top:72%;width:140px;animation-delay:1.3s"></div>
+  <div class="speed" style="top:86%;width:220px;animation-delay:.5s"></div>
+  <div class="wrap">
+    <div>
+      <h1><img class="logo" src="img/logo.webp" width="900" height="518" alt="Viral Run"></h1>
+      <p class="tag" lang="en"><span class="y">Chase them.</span> <span class="c">Bonk them.</span><br><span class="p">Make them lose it!</span></p>
+      <p class="tag" lang="tr"><span class="y">Kovala.</span> <span class="c">Topu at.</span><br><span class="p">Çıldırt onları!</span></p>
+      <p class="sub" lang="en">Ten ridiculous characters are loose around town. Catch up, bonk them with a ball and push their buttons until they snap — across 200 levels and 10 crazy places.</p>
+      <p class="sub" lang="tr">Şehirde on absürt karakter kol geziyor. Yetiş, topu at, sinirlerini tepesine çıkar — 10 çılgın mekânda 200 bölüm seni bekliyor.</p>
+      <div class="badges store">
+        <a class="apple" data-store="ios" href="https://apps.apple.com/app/id6825478642" target="_blank" rel="noopener">
+          <img lang="en" src="img/badge-apple-en.svg" alt="Download on the App Store"><img lang="tr" src="img/badge-apple-tr.svg" alt="App Store'dan indirin">
+        </a>
+        <a class="play" data-store="android" href="https://play.google.com/store/apps/details?id=com.resulfe.viralkacis" target="_blank" rel="noopener">
+          <img lang="en" src="img/badge-play-en.png" alt="Get it on Google Play"><img lang="tr" src="img/badge-play-tr.png" alt="Google Play'den alın">
+        </a>
+      </div>
+      <p class="free"><span lang="en">Free on iPhone &amp; Android · Plays offline</span><span lang="tr">iPhone ve Android'de ücretsiz · İnternetsiz oynanır</span></p>
+      <p class="inapp" id="inapp">
+        <span lang="en">Store didn't open? Tap <b>⋯</b> at the top right and choose <b>Open in browser</b>.</span>
+        <span lang="tr">Mağaza açılmadı mı? Sağ üstteki <b>⋯</b> simgesine dokunup <b>Tarayıcıda aç</b>'ı seç.</span>
+      </p>
+    </div>
+    <div class="phone">
+      <video src="img/loop.mp4" poster="img/loop-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Viral Run gameplay"></video>
+      <div class="sticker s1">BONK!</div>
+      <div class="sticker s2">x8 COMBO</div>
+    </div>
+  </div>
+</section>
+
+<div class="stats" aria-hidden="true">
+  <div class="ticker" id="ticker">
+    <span lang="en"><b>200</b> LEVELS</span><span lang="en"><b>10</b> CHARACTERS</span><span lang="en"><b>10</b> PLACES</span><span lang="en"><b>10</b> BOSSES</span><span lang="en"><b>6</b> GADGETS</span><span lang="en">DAILY CHALLENGE</span><span lang="en">WEEKLY KAOS CUP</span>
+    <span lang="tr"><b>200</b> BÖLÜM</span><span lang="tr"><b>10</b> KARAKTER</span><span lang="tr"><b>10</b> MEKÂN</span><span lang="tr"><b>10</b> BOSS</span><span lang="tr"><b>6</b> ALET</span><span lang="tr">GÜNLÜK GÖREV</span><span lang="tr">HAFTALIK KAOS KUPASI</span>
+  </div>
+</div>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="rv"><span lang="en">How it plays</span><span lang="tr">Nasıl oynanır?</span></h2>
+    <p class="lead rv"><span lang="en">Short rounds, big chaos. Learn it in seconds.</span><span lang="tr">Kısa turlar, büyük kaos. Saniyeler içinde öğrenirsin.</span></p>
+    <div class="steps">
+      <div class="step rv"><div class="num">1</div>
+        <h3><span lang="en">Chase them</span><span lang="tr">Kovala</span></h3>
+        <p lang="en">Drag to run. Every character escapes their own way — jukes, curves, decoys, spins and shoulder charges.</p>
+        <p lang="tr">Sürükle ve koş. Her karakter kendi tarzında kaçar — çalım, kavis, tuzak, dönüş ve omuz atağı.</p></div>
+      <div class="step rv"><div class="num">2</div>
+        <h3><span lang="en">Bonk them</span><span lang="tr">Topu at</span></h3>
+        <p lang="en">Throw the ball, bank it off walls for trick shots and time a Perfect Dash the moment they slip up.</p>
+        <p lang="tr">Topu fırlat, duvardan sektirip hile vuruşu yap, kaydıkları anda Kusursuz Atılış'ı patlat.</p></div>
+      <div class="step rv"><div class="num">3</div>
+        <h3><span lang="en">Make them lose it</span><span lang="tr">Çıldırt onları</span></h3>
+        <p lang="en">Build combos, fill the KAOS meter and unleash it for the big hit. Then do it again, faster.</p>
+        <p lang="tr">Kombo yap, KAOS barını doldur ve büyük vuruşu indir. Sonra daha hızlısını dene.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="screens" class="gallery-sec">
+  <div class="wrap">
+    <h2 class="rv"><span lang="en">Take a look</span><span lang="tr">Bir göz at</span></h2>
+    <p class="lead rv"><span lang="en">Real gameplay, straight from the game.</span><span lang="tr">Gerçek oyun içi görüntüler.</span></p>
+  </div>
+  <div class="gallery" id="gallery">
+    <img data-shot="01" alt="Chase and bonk gameplay on the seaside" loading="lazy">
+    <img data-shot="02" alt="Ten places, each with its own trap" loading="lazy">
+    <img data-shot="03" alt="Three-phase boss fight" loading="lazy">
+    <img data-shot="04" alt="Character abilities" loading="lazy">
+    <img data-shot="05" alt="Ten crazy places" loading="lazy">
+    <img data-shot="06" alt="Missions and mastery" loading="lazy">
+    <img data-shot="07" alt="Ten characters" loading="lazy">
+    <img data-shot="08" alt="Gadgets" loading="lazy">
+  </div>
+  <div class="gal-nav"><button type="button" id="prev" aria-label="Previous">‹</button><button type="button" id="next" aria-label="Next">›</button></div>
+</section>
+
+<section id="features">
+  <div class="wrap">
+    <h2 class="rv"><span lang="en">What's inside</span><span lang="tr">İçinde neler var?</span></h2>
+    <p class="lead rv"><span lang="en">Everything below is in the game today.</span><span lang="tr">Aşağıdakilerin hepsi şu an oyunda.</span></p>
+    <div class="feats">
+      <div class="feat rv"><div class="ico" style="background:var(--yellow)"><svg viewBox="0 0 24 24"><path d="M4 21V4h11l-1.5 4L15 12H4"/></svg></div><div>
+        <h3><span lang="en">200 levels</span><span lang="tr">200 bölüm</span></h3>
+        <p lang="en">Hand-made levels across 10 places, from the Neighborhood Square to the Space Carnival.</p><p lang="tr">Mahalle Meydanı'ndan Uzay Lunaparkı'na 10 mekânda elle tasarlanmış bölümler.</p></div></div>
+      <div class="feat rv"><div class="ico" style="background:var(--cyan)"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-4 3.4-6 6.5-6s5.7 2 6.5 6"/><circle cx="17" cy="7" r="2.5"/><path d="M16 12.5c3 0 5 1.8 5.5 5"/></svg></div><div>
+        <h3><span lang="en">10 characters</span><span lang="tr">10 karakter</span></h3>
+        <p lang="en">Each one has a signature ability and their own escape style.</p><p lang="tr">Her birinin kendine özgü yeteneği ve kaçış tarzı var.</p></div></div>
+      <div class="feat rv"><div class="ico" style="background:var(--pink)"><svg viewBox="0 0 24 24" style="stroke:#fff"><path d="M5 20l3-9 4 3 4-3 3 9z"/><path d="M8 11l-2-6 4 3 2-4 2 4 4-3-2 6"/></svg></div><div>
+        <h3><span lang="en">10 bosses</span><span lang="tr">10 boss</span></h3>
+        <p lang="en">A three-phase boss waits at the end of every place.</p><p lang="tr">Her mekânın sonunda üç aşamalı bir boss bekliyor.</p></div></div>
+      <div class="feat rv"><div class="ico" style="background:var(--orange)"><svg viewBox="0 0 24 24"><path d="M14 3l7 7-4 4-7-7z"/><path d="M10 7l-7 7 7 7 7-7"/><circle cx="10" cy="14" r="1.5"/></svg></div><div>
+        <h3><span lang="en">Gadgets &amp; power-ups</span><span lang="tr">Aletler ve güçlendirmeler</span></h3>
+        <p lang="en">Banana peels, goo balloons, an air horn, turbo sneakers and more — upgrade all six.</p><p lang="tr">Muz kabuğu, yapışkan balon, korna, turbo ayakkabı ve fazlası — altısını da geliştir.</p></div></div>
+      <div class="feat rv"><div class="ico" style="background:var(--green)"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M9 15l2 2 4-4"/></svg></div><div>
+        <h3><span lang="en">Daily &amp; weekly</span><span lang="tr">Günlük ve haftalık</span></h3>
+        <p lang="en">A new Daily Challenge every day and a five-stage Weekly Kaos Cup with trophies.</p><p lang="tr">Her gün yeni bir Günlük Görev ve kupalı, beş aşamalı Haftalık Kaos Kupası.</p></div></div>
+      <div class="feat rv"><div class="ico" style="background:#b79bff"><svg viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><path d="M3 3l18 18"/></svg></div><div>
+        <h3><span lang="en">Plays offline</span><span lang="tr">İnternetsiz oynanır</span></h3>
+        <p lang="en">No account needed. Short rounds made for quick sessions, anywhere.</p><p lang="tr">Hesap gerekmez. Her yerde kısa molalar için kısa turlar.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="trailer" class="gallery-sec">
+  <div class="wrap">
+    <h2 class="rv"><span lang="en">Watch the trailer</span><span lang="tr">Fragmanı izle</span></h2>
+    <p class="lead rv"><span lang="en">One minute of pure chaos.</span><span lang="tr">Bir dakikalık saf kaos.</span></p>
+    <div class="trailer rv" id="trailer-box" role="button" tabindex="0" aria-label="Play trailer" style="background-image:url(img/og.jpg)">
+      <div class="play"></div>
+      <div class="note"><span lang="en">Plays from YouTube</span><span lang="tr">YouTube üzerinden oynatılır</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2 class="rv"><span lang="en">Questions</span><span lang="tr">Sıkça sorulanlar</span></h2>
+    <p class="lead rv"></p>
+    <div class="faq">
+      <details class="rv"><summary><span lang="en">Is Viral Run free?</span><span lang="tr">Viral Run ücretsiz mi?</span></summary>
+        <p lang="en">Yes. The whole game is free to download and play on iPhone and Android.</p><p lang="tr">Evet. Oyunun tamamı iPhone ve Android'de ücretsiz indirilir ve oynanır.</p></details>
+      <details class="rv"><summary><span lang="en">Are there ads?</span><span lang="tr">Reklam var mı?</span></summary>
+        <p lang="en">Yes, between rounds. A single one-time purchase (Remove Ads) turns off the ads that interrupt the game. Optional reward videos stay available if you want them.</p>
+        <p lang="tr">Evet, turlar arasında. Tek seferlik "Reklamları Kaldır" satın alımı oyunu bölen reklamları kapatır. İstersen ödüllü videoları izlemeye devam edebilirsin.</p></details>
+      <details class="rv"><summary><span lang="en">Do I need an account or internet?</span><span lang="tr">Hesap ya da internet gerekiyor mu?</span></summary>
+        <p lang="en">No account at all, and you can play offline.</p><p lang="tr">Hiç hesap gerekmez, internetsiz de oynayabilirsin.</p></details>
+      <details class="rv"><summary><span lang="en">Can I buy anything that makes me stronger?</span><span lang="tr">Güç satın alabilir miyim?</span></summary>
+        <p lang="en">No. Balls, tracksuits and victory effects are looks only — never pay-to-win.</p><p lang="tr">Hayır. Toplar, eşofmanlar ve zafer efektleri sadece görünüştür — parayla kazanma yok.</p></details>
+      <details class="rv"><summary><span lang="en">I changed phones. How do I get Remove Ads back?</span><span lang="tr">Telefon değiştirdim, reklamsız paketi nasıl geri alırım?</span></summary>
+        <p lang="en">Open the Remove Ads screen and tap "Restore purchases" while signed in to the same App Store or Google Play account.</p>
+        <p lang="tr">Aynı App Store / Google Play hesabıyla giriş yapmışken Reklamları Kaldır ekranında "Satın alımları geri yükle"ye dokun.</p></details>
+      <details class="rv"><summary><span lang="en">Which languages?</span><span lang="tr">Hangi dillerde?</span></summary>
+        <p lang="en">English and Turkish.</p><p lang="tr">Türkçe ve İngilizce.</p></details>
+      <details class="rv"><summary><span lang="en">Found a bug or have an idea?</span><span lang="tr">Hata buldun ya da bir fikrin mi var?</span></summary>
+        <p lang="en">Write to <a href="mailto:prosim.gamestudio@gmail.com">prosim.gamestudio@gmail.com</a> or send us a message on Instagram.</p>
+        <p lang="tr"><a href="mailto:prosim.gamestudio@gmail.com">prosim.gamestudio@gmail.com</a> adresine yaz ya da Instagram'dan mesaj at.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <img class="icon rv" src="img/icon-512.webp" width="512" height="512" alt="Viral Run app icon">
+    <h2 class="rv"><span lang="en">Ready to start the chase?</span><span lang="tr">Kovalamacaya hazır mısın?</span></h2>
+    <p class="lead rv" style="margin-bottom:0"><span lang="en">Free on iPhone and Android.</span><span lang="tr">iPhone ve Android'de ücretsiz.</span></p>
+    <div class="badges store rv">
+      <a class="apple" data-store="ios" href="https://apps.apple.com/app/id6825478642" target="_blank" rel="noopener">
+        <img lang="en" src="img/badge-apple-en.svg" alt="Download on the App Store"><img lang="tr" src="img/badge-apple-tr.svg" alt="App Store'dan indirin">
+      </a>
+      <a class="play" data-store="android" href="https://play.google.com/store/apps/details?id=com.resulfe.viralkacis" target="_blank" rel="noopener">
+        <img lang="en" src="img/badge-play-en.png" alt="Get it on Google Play"><img lang="tr" src="img/badge-play-tr.png" alt="Google Play'den alın">
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Resulfe Games</div>
+    <nav>
+      <a href="https://sites.google.com/view/viral-run-privacy/" target="_blank" rel="noopener"><span lang="en">Privacy Policy</span><span lang="tr">Gizlilik Politikası</span></a>
+      <a href="mailto:prosim.gamestudio@gmail.com"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      <a href="/"><span lang="en">More games</span><span lang="tr">Diğer oyunlar</span></a>
+    </nav>
+    <div class="social">
+      <a href="https://www.instagram.com/viralrungame/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm4.9-8.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2zM21.9 7.1c-.1-1.6-.4-3-1.6-4.2S17.6 1.3 16 1.2C14.4 1.1 9.6 1.1 8 1.2 6.4 1.3 5 1.6 3.8 2.8S2.2 5.5 2.1 7.1C2 8.7 2 13.4 2.1 15c.1 1.6.4 3 1.6 4.2s2.6 1.5 4.2 1.6c1.6.1 6.4.1 8 0 1.6-.1 3-.4 4.2-1.6s1.5-2.6 1.6-4.2c.1-1.6.1-6.3 0-7.9zM19.8 18c-.4.9-1 1.5-1.9 1.9-1.3.5-4.4.4-5.9.4s-4.6.1-5.9-.4c-.9-.4-1.5-1-1.9-1.9-.5-1.3-.4-4.4-.4-5.9s-.1-4.6.4-5.9c.4-.9 1-1.5 1.9-1.9 1.3-.5 4.4-.4 5.9-.4s4.6-.1 5.9.4c.9.4 1.5 1 1.9 1.9.5 1.3.4 4.4.4 5.9s.1 4.6-.4 5.9z"/></svg></a>
+      <a href="https://www.youtube.com/@viralrungame" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg></a>
+      <a href="https://www.tiktok.com/@viralrungame" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.4a2.9 2.9 0 1 1-2-2.7V9.2a6.3 6.3 0 1 0 5.4 6.2V8.7a8.2 8.2 0 0 0 4.8 1.5V6.8z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var PKG='com.resulfe.viralkacis', ua=navigator.userAgent||'';
+  var isAndroid=/Android/i.test(ua), isIOS=/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  var inApp=/Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|Bytedance|Line\//i.test(ua);
+
+  // language: ?lang= / saved choice / browser language
+  var root=document.documentElement, q=new URLSearchParams(location.search), saved=null;
+  try{saved=localStorage.getItem('vr-lang')}catch(e){}
+  var lang=q.get('lang')||saved||((navigator.language||'en').toLowerCase().indexOf('tr')===0?'tr':'en');
+  function setLang(l){
+    lang=(l==='tr')?'tr':'en'; root.setAttribute('data-lang',lang); root.lang=lang;
+    document.querySelectorAll('.langs button').forEach(function(b){b.classList.toggle('on',b.dataset.set===lang)});
+    document.querySelectorAll('[data-shot]').forEach(function(i){i.src='shots/'+lang+'/'+i.dataset.shot+'.webp'});
+    document.title=lang==='tr'?'Viral Run: Hepsini Yakala':'Viral Run: Catch Them All';
+  }
+  document.querySelectorAll('.langs button').forEach(function(b){b.onclick=function(){setLang(b.dataset.set);try{localStorage.setItem('vr-lang',lang)}catch(e){}}});
+  setLang(lang);
+
+  // store links: pass the campaign source through, open the Play app directly on Android
+  var src=(q.get('utm_source')||q.get('src')||(inApp?'inapp':'website')).replace(/[^\w.-]/g,'').slice(0,40);
+  var ref=encodeURIComponent('utm_source='+src+'&utm_medium=landing');
+  var playWeb='https://play.google.com/store/apps/details?id='+PKG+'&referrer='+ref;
+  var playIntent='intent://details?id='+PKG+'&referrer='+ref+'#Intent;scheme=market;package=com.android.vending;S.browser_fallback_url='+encodeURIComponent(playWeb)+';end';
+  document.querySelectorAll('a[data-store=android]').forEach(function(a){a.href=isAndroid?playIntent:playWeb; if(isAndroid) a.removeAttribute('target')});
+  document.querySelectorAll('a[data-store=ios]').forEach(function(a){a.href='https://apps.apple.com/app/id6825478642'});
+  // put the visitor's own store first
+  if(isAndroid) document.querySelectorAll('.badges.store').forEach(function(g){var p=g.querySelector('.play');g.insertBefore(p,g.firstChild)});
+  if(isAndroid&&inApp){ document.querySelectorAll('a[data-store=android]').forEach(function(a){a.addEventListener('click',function(){setTimeout(function(){document.getElementById('inapp').classList.add('show')},1500)})}); }
+
+  // header background after scrolling
+  var bar=document.getElementById('top-bar');
+  function onScroll(){bar.classList.toggle('solid',scrollY>40)} addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  // ticker: duplicate content for a seamless loop
+  var t=document.getElementById('ticker'); t.innerHTML+=t.innerHTML;
+
+  // gallery arrows
+  var g=document.getElementById('gallery');
+  function step(d){var w=g.querySelector('img').getBoundingClientRect().width+18; g.scrollBy({left:d*w,behavior:'smooth'})}
+  document.getElementById('prev').onclick=function(){step(-1)}; document.getElementById('next').onclick=function(){step(1)};
+
+  // trailer: load YouTube only after a tap (no third-party requests before that)
+  var tb=document.getElementById('trailer-box');
+  function play(){ if(tb.dataset.on) return; tb.dataset.on=1;
+    var id=lang==='tr'?'k4XVVqSArr0':'fUaNrKqhjHo';
+    tb.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Viral Run trailer"></iframe>'; }
+  tb.onclick=play; tb.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();play()}};
+
+  // reveal on scroll
+  var els=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+    els.forEach(function(e){io.observe(e)});
+  } else els.forEach(function(e){e.classList.add('in')});
+})();
+</script>
+</body>
+</html>
