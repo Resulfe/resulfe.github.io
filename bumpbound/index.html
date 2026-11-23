@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bumpbound</title>
+<meta name="description" content="Bumpbound: bumper car battles and car football. Play online with friends or offline against bots. Free on Android and iPhone.">
+<meta property="og:title" content="Bumpbound: Bumper Car Battle">
+<meta property="og:description" content="Bumper car battles and car football. Play online with friends or offline.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://resulfe.github.io/bumpbound/img/logo.jpg">
+<meta property="og:url" content="https://resulfe.github.io/bumpbound/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#050717">
+<link rel="icon" href="img/icon-64.png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<style>
+@font-face{font-family:"Lilita One";src:url(fonts/lilita-latin.woff2) format("woff2");font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Lilita One";src:url(fonts/lilita-ext.woff2) format("woff2");font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Nunito";src:url(fonts/nunito-latin.woff2) format("woff2");font-weight:200 1000;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Nunito";src:url(fonts/nunito-ext.woff2) format("woff2");font-weight:200 1000;font-display:swap;unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+/* Layout: one dark arena column; neon blue (left car) vs orange (right car) from the logo carry the whole page. */
+:root{
+  --bg:#050717; --panel:#0c1033; --panel-2:#141a4a; --line:#252c6b;
+  --ink:#f4f5ff; --muted:#aab0dc;
+  --blue:#2ec5ff; --orange:#ff9a1f; --yellow:#ffd23a; --pink:#e040ff;
+  --display:"Lilita One","Arial Black",Impact,system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--blue)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:.01em;line-height:1.08;text-wrap:balance;margin:0}
+h2{font-size:clamp(30px,5vw,46px)}
+h3{font-size:22px}
+p{margin:0}
+.eyebrow{font:800 13px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+section{padding-block:72px}
+.sec-head{display:grid;gap:12px;margin-bottom:36px;max-width:640px}
+.sec-head p{color:var(--muted)}
+
+/* top bar */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(5,7,23,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-family:var(--display);font-size:22px}
+.brand img{width:34px;height:34px;border-radius:9px}
+.nav{display:flex;gap:18px;margin-left:auto}
+.nav a{color:var(--muted);text-decoration:none;font-weight:700;font-size:15px}
+.nav a:hover{color:var(--ink)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);font:800 13px/1 var(--body);padding:8px 11px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--panel-2);color:var(--ink)}
+@media (max-width:640px){.nav{display:none}.lang{margin-left:auto}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding-block:28px 64px}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 50% at 18% 30%,rgba(46,197,255,.20),transparent 70%),
+  radial-gradient(60% 50% at 85% 30%,rgba(255,154,31,.18),transparent 70%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;gap:26px;justify-items:center;text-align:center}
+.hero-logo{width:min(820px,100%);height:auto;mix-blend-mode:screen}
+.hero h1{font-size:clamp(28px,4.6vw,48px);max-width:16em}
+.hero h1 .b{color:var(--blue)} .hero h1 .o{color:var(--orange)}
+.hero .lede{color:var(--muted);max-width:36em;font-size:18px}
+.stores{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.store{display:flex;align-items:center;gap:12px;min-width:220px;padding:12px 22px 12px 18px;border-radius:16px;text-decoration:none;color:#0a0b1c;font-weight:800;transition:transform .15s}
+.store:hover{transform:translateY(-2px)}
+.store:focus-visible,.lang button:focus-visible,.shot:focus-visible,.trailer:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.store svg{width:28px;height:28px;flex:none}
+.store small{display:block;font-size:12px;font-weight:700;opacity:.75;line-height:1.1}
+.store span{display:block;font-size:20px;line-height:1.15;font-family:var(--display);font-weight:400}
+.store.play{background:linear-gradient(180deg,#ffd76a,var(--orange))}
+.store.apple{background:linear-gradient(180deg,#8fe4ff,var(--blue))}
+.store.soon{background:var(--panel-2);color:var(--muted);cursor:default;border:1px dashed var(--line)}
+.store.soon:hover{transform:none}
+.free{font-weight:700;color:var(--muted);font-size:15px}
+.inapp{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;color:var(--muted);max-width:460px}
+.hero-shot{width:min(980px,100%);border-radius:22px;border:2px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 6px rgba(46,197,255,.06)}
+
+/* modes */
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:22px}
+.mode{border-radius:22px;overflow:hidden;background:var(--panel);border:1px solid var(--line);display:grid}
+.mode img{aspect-ratio:16/9;object-fit:cover;width:100%}
+.mode div{padding:22px 24px 26px;display:grid;gap:8px}
+.mode h3{font-size:28px}
+.mode.bump h3{color:var(--blue)} .mode.foot h3{color:var(--orange)}
+.mode p{color:var(--muted)}
+
+/* trailer */
+.trailer{position:relative;display:block;border-radius:22px;overflow:hidden;border:2px solid var(--line);max-width:900px}
+.trailer img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.trailer .play-btn{position:absolute;inset:0;margin:auto;width:84px;height:84px;border-radius:50%;background:var(--orange);display:grid;place-items:center;box-shadow:0 0 0 10px rgba(255,154,31,.25)}
+.trailer .play-btn svg{width:34px;height:34px;margin-left:5px}
+.trailer-note{margin-top:12px;color:var(--muted);font-size:15px}
+
+/* screenshots */
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
+.shot img{width:100%;aspect-ratio:16/9;object-fit:cover}
+
+/* features */
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px 36px}
+.feat{display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start}
+.feat .ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-size:22px;color:#0a0b1c}
+.feat:nth-child(3n+1) .ico{background:var(--blue)} .feat:nth-child(3n+2) .ico{background:var(--orange)} .feat:nth-child(3n) .ico{background:var(--yellow)}
+.feat .ico svg{width:26px;height:26px}
+.feat div{display:grid;gap:4px;min-width:0}
+.feat p{color:var(--muted);font-size:16px}
+
+/* faq */
+.faq{display:grid;gap:12px;max-width:820px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:0 22px}
+summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:800;font-size:18px;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--display);font-size:24px;line-height:1;color:var(--orange)}
+details[open] summary::after{content:"–"}
+details p{padding-bottom:20px;color:var(--muted)}
+
+/* cta */
+.cta{text-align:center}
+.cta .wrap{display:grid;gap:22px;justify-items:center}
+.cta img.icon{width:112px;height:112px;border-radius:26px;box-shadow:0 0 0 4px var(--line),0 20px 50px rgba(46,197,255,.25)}
+
+footer{border-top:1px solid var(--line);padding-block:28px 40px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px 26px;align-items:center}
+footer a{color:var(--muted)}
+footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="img/icon-64.png" alt="">Bumpbound</a>
+    <nav class="nav">
+      <a href="#modes" data-i18n="navModes">Modes</a>
+      <a href="#trailer" data-i18n="navTrailer">Trailer</a>
+      <a href="#screens" data-i18n="navShots">Screenshots</a>
+      <a href="#faq" data-i18n="navFaq">FAQ</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" id="lang-tr" data-lang="tr" aria-pressed="false">TR</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <img class="hero-logo" src="img/logo.jpg" alt="Bumpbound" width="1200" height="400">
+    <h1 data-i18n-html="heroTitle"><span class="b">Bump</span> your rivals. <span class="o">Score</span> with your car.</h1>
+    <p class="lede" data-i18n="heroLede">Bumper car battles and car football in short, loud, physical matches. Play online with friends or offline against bots.</p>
+    <div class="stores" data-stores></div>
+    <p class="free" data-i18n="free">Free to play · English and Turkish</p>
+    <p class="inapp" id="inapp" hidden data-i18n-html="inapp"></p>
+    <img class="hero-shot" src="img/hero.jpg" alt="Four bumper cars crashing in the neon arena while the crowd cheers" width="1600" height="900">
+  </div>
+</section>
+
+<section id="modes">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="modesEyebrow">Two ways to play</span>
+      <h2 data-i18n="modesTitle">Smash or score</h2>
+    </div>
+    <div class="modes">
+      <article class="mode bump">
+        <img src="img/shots/en_06.jpg" data-shot="06" alt="" loading="lazy">
+        <div>
+          <h3 data-i18n="bumpTitle">Bumper Battle</h3>
+          <p data-i18n="bumpText">Ram rivals, chain combos and push them off the edge. Jump pads, hazards and power-ups change every fight across 9 arenas.</p>
+        </div>
+      </article>
+      <article class="mode foot">
+        <img src="img/shots/en_04.jpg" data-shot="04" alt="" loading="lazy">
+        <div>
+          <h3 data-i18n="footTitle">Mini Football</h3>
+          <p data-i18n="footText">Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="trailer">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="trailerEyebrow">Watch</span>
+      <h2 data-i18n="trailerTitle">See it in motion</h2>
+    </div>
+    <a class="trailer" id="trailer-link" href="https://www.youtube.com/watch?v=qAJTwwfwYL8" target="_blank" rel="noopener">
+      <img id="trailer-img" src="img/trailer_en.jpg" alt="Bumpbound trailer" loading="lazy">
+      <span class="play-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#0a0b1c" d="M6 4l15 8-15 8z"/></svg></span>
+    </a>
+    <p class="trailer-note" data-i18n="trailerNote">Opens on YouTube.</p>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="shotsEyebrow">Take a look</span>
+      <h2 data-i18n="shotsTitle">Screenshots</h2>
+    </div>
+    <div class="shots">
+      <a class="shot" href="img/shots/en_01.jpg" target="_blank" rel="noopener"><img src="img/shots/en_01.jpg" data-shot="01" alt="Bump 'em all: crash into rivals and grab power-ups" loading="lazy"></a>
+      <a class="shot" href="img/shots/en_02.jpg" target="_blank" rel="noopener"><img src="img/shots/en_02.jpg" data-shot="02" alt="16 cars to collect" loading="lazy"></a>
+      <a class="shot" href="img/shots/en_03.jpg" target="_blank" rel="noopener"><img src="img/shots/en_03.jpg" data-shot="03" alt="9 wild arenas" loading="lazy"></a>
+      <a class="shot" href="img/shots/en_04.jpg" target="_blank" rel="noopener"><img src="img/shots/en_04.jpg" data-shot="04" alt="Mini football" loading="lazy"></a>
+      <a class="shot" href="img/shots/en_05.jpg" target="_blank" rel="noopener"><img src="img/shots/en_05.jpg" data-shot="05" alt="Customize your ride" loading="lazy"></a>
+      <a class="shot" href="img/shots/en_06.jpg" target="_blank" rel="noopener"><img src="img/shots/en_06.jpg" data-shot="06" alt="Epic crashes" loading="lazy"></a>
+      <a class="shot" href="img/shots/en_07.jpg" target="_blank" rel="noopener"><img src="img/shots/en_07.jpg" data-shot="07" alt="Win the football cup" loading="lazy"></a>
+      <a class="shot" href="img/shots/en_08.jpg" target="_blank" rel="noopener"><img src="img/shots/en_08.jpg" data-shot="08" alt="Play online with friends" loading="lazy"></a>
+    </div>
+  </div>
+</section>
+
+<section id="inside">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="insideEyebrow">What's inside</span>
+      <h2 data-i18n="insideTitle">Plenty to unlock</h2>
+    </div>
+    <div class="feats">
+      <div class="feat"><span class="ico">29</span><div><h3 data-i18n="f1t">Career</h3><p data-i18n="f1p">29 stages with challenges and stars to earn.</p></div></div>
+      <div class="feat"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="3.2" fill="#0a0b1c"/><circle cx="16" cy="9" r="3.2" fill="#0a0b1c"/><path d="M2 20c.6-3.4 3-5 6-5s5.4 1.6 6 5M10 20c.6-3.4 3-5 6-5s5.4 1.6 6 5" stroke="#0a0b1c" stroke-width="2.2" fill="none"/></svg></span><div><h3 data-i18n="f2t">Online with friends</h3><p data-i18n="f2p">Quick Play, or a private room with a code for a friend.</p></div></div>
+      <div class="feat"><span class="ico"><svg viewBox="0 0 24 24"><path d="M5 9h14l-1 11H6z" fill="#0a0b1c"/><path d="M9 9V6a3 3 0 0 1 6 0v3" stroke="#0a0b1c" stroke-width="2.2" fill="none"/></svg></span><div><h3 data-i18n="f3t">Garage</h3><p data-i18n="f3p">16 cars, finishes, tire styles, trails, helmets, suits and hats.</p></div></div>
+      <div class="feat"><span class="ico"><svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0zM4 5h3v3a3 3 0 0 1-3-3zM20 5h-3v3a3 3 0 0 0 3-3zM10 14h4v3h3v3H7v-3h3z" fill="#0a0b1c"/></svg></span><div><h3 data-i18n="f4t">Football Cup</h3><p data-i18n="f4p">Group stage, knockout rounds and golden goal.</p></div></div>
+      <div class="feat"><span class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3" fill="#0a0b1c"/><path d="M8 3v4M16 3v4" stroke="#0a0b1c" stroke-width="2.2"/></svg></span><div><h3 data-i18n="f5t">Daily goals</h3><p data-i18n="f5p">Daily and weekly challenges give you something new to chase.</p></div></div>
+      <div class="feat"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z" fill="#0a0b1c"/></svg></span><div><h3 data-i18n="f6t">Fair online</h3><p data-i18n="f6p">Cosmetics are visual only. Online, every car has the same stats.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="faqEyebrow">Questions</span>
+      <h2 data-i18n="faqTitle">FAQ</h2>
+    </div>
+    <div class="faq">
+      <details><summary data-i18n="q1">Is Bumpbound free?</summary><p data-i18n="a1">Yes. The game is free to play. It has ads and optional in-app purchases: coin packs, Remove Ads and premium car finishes. Rewarded ads are always optional.</p></details>
+      <details><summary data-i18n="q2">Can I play without internet?</summary><p data-i18n="a2">Yes. Career, the Football Cup and quick matches against bots all work offline. You only need internet for online matches.</p></details>
+      <details><summary data-i18n="q3">How do I play with a friend?</summary><p data-i18n="a3">Open Online, host a private room and share the room code. Your friend enters the code to join.</p></details>
+      <details><summary data-i18n="q4">Can I buy an advantage online?</summary><p data-i18n="a4">No. Cosmetics only change how your car looks. In online matches every car uses the same stats. Performance upgrades apply to offline play.</p></details>
+      <details><summary data-i18n="q5">I bought something on a new phone. How do I get it back?</summary><p data-i18n="a5">Sign in with the same store account and use Restore Purchases in the Store.</p></details>
+      <details><summary data-i18n="q6">How do I contact you?</summary><p><span data-i18n="a6">Write to us at</span> <a href="mailto:resul.demir1897@gmail.com">resul.demir1897@gmail.com</a></p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <img class="icon" src="img/icon-512.png" alt="Bumpbound app icon" width="112" height="112" loading="lazy">
+    <h2 data-i18n="ctaTitle">Ready to bump?</h2>
+    <div class="stores" data-stores></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Prosim Games</span>
+    <div class="links">
+      <a href="https://sites.google.com/view/bumpbound-privacy/ana-sayfa" target="_blank" rel="noopener" data-i18n="privacy">Privacy Policy</a>
+      <a href="mailto:resul.demir1897@gmail.com" data-i18n="contact">Contact</a>
+      <a href="https://www.instagram.com/bumpboundgame/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@bumpboundgame" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://www.youtube.com/@bumpboundgame" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // ---- Store links. Paste the App Store URL here once the app is approved. ----
+  var PKG = "com.resulstudio.cars";
+  var PLAY_URL = "https://play.google.com/store/apps/details?id=" + PKG;
+  var APP_STORE_URL = ""; // e.g. "https://apps.apple.com/app/id0000000000"
+
+  // Instagram/TikTok in-app browsers on Android ignore taps on play.google.com links.
+  // An intent:// link hands off to the Play Store app and falls back to the web page.
+  var ua = navigator.userAgent || "";
+  var isAndroid = /Android/i.test(ua);
+  var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var inApp = /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|Bytedance|Line\//i.test(ua);
+  var q = new URLSearchParams(location.search);
+  var src = (q.get("utm_source") || q.get("src") || (inApp ? "inapp" : "website")).replace(/[^\w.-]/g, "").slice(0, 40);
+  var ref = encodeURIComponent("utm_source=" + src + "&utm_medium=landing");
+  var playWeb = PLAY_URL + "&referrer=" + ref;
+  var playHref = isAndroid
+    ? "intent://details?id=" + PKG + "&referrer=" + ref + "#Intent;scheme=market;package=com.android.vending;S.browser_fallback_url=" + encodeURIComponent(playWeb) + ";end"
+    : playWeb;
+
+  var I = {
+    en:{navModes:"Modes",navTrailer:"Trailer",navShots:"Screenshots",navFaq:"FAQ",
+      heroTitle:'<span class="b">Bump</span> your rivals. <span class="o">Score</span> with your car.',
+      heroLede:"Bumper car battles and car football in short, loud, physical matches. Play online with friends or offline against bots.",
+      free:"Free to play · English and Turkish",
+      modesEyebrow:"Two ways to play",modesTitle:"Smash or score",
+      bumpTitle:"Bumper Battle",bumpText:"Ram rivals, chain combos and push them off the edge. Jump pads, hazards and power-ups change every fight across 9 arenas.",
+      footTitle:"Mini Football",footText:"Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.",
+      trailerEyebrow:"Watch",trailerTitle:"See it in motion",trailerNote:"Opens on YouTube.",
+      shotsEyebrow:"Take a look",shotsTitle:"Screenshots",
+      insideEyebrow:"What's inside",insideTitle:"Plenty to unlock",
+      f1t:"Career",f1p:"29 stages with challenges and stars to earn.",
+      f2t:"Online with friends",f2p:"Quick Play, or a private room with a code for a friend.",
+      f3t:"Garage",f3p:"16 cars, finishes, tire styles, trails, helmets, suits and hats.",
+      f4t:"Football Cup",f4p:"Group stage, knockout rounds and golden goal.",
+      f5t:"Daily goals",f5p:"Daily and weekly challenges give you something new to chase.",
+      f6t:"Fair online",f6p:"Cosmetics are visual only. Online, every car has the same stats.",
+      faqEyebrow:"Questions",faqTitle:"FAQ",
+      q1:"Is Bumpbound free?",a1:"Yes. The game is free to play. It has ads and optional in-app purchases: coin packs, Remove Ads and premium car finishes. Rewarded ads are always optional.",
+      q2:"Can I play without internet?",a2:"Yes. Career, the Football Cup and quick matches against bots all work offline. You only need internet for online matches.",
+      q3:"How do I play with a friend?",a3:"Open Online, host a private room and share the room code. Your friend enters the code to join.",
+      q4:"Can I buy an advantage online?",a4:"No. Cosmetics only change how your car looks. In online matches every car uses the same stats. Performance upgrades apply to offline play.",
+      q5:"I bought something on a new phone. How do I get it back?",a5:"Sign in with the same store account and use Restore Purchases in the Store.",
+      q6:"How do I contact you?",a6:"Write to us at",
+      ctaTitle:"Ready to bump?",privacy:"Privacy Policy",contact:"Contact",
+      inapp:"Store didn't open? Tap <b>⋯</b> at the top right and choose <b>Open in browser</b>.",playSmall:"GET IT ON",playBig:"Google Play",appSmall:"Download on the",appBig:"App Store",soonSmall:"Coming soon to the",
+      trailer:"https://www.youtube.com/watch?v=qAJTwwfwYL8"},
+    tr:{navModes:"Modlar",navTrailer:"Fragman",navShots:"Görseller",navFaq:"SSS",
+      heroTitle:'Rakiplerine <span class="b">çarp</span>. Arabanla <span class="o">gol at</span>.',
+      heroLede:"Kısa, gürültülü ve fiziksel maçlarda çarpışan araba savaşları ve araba futbolu. Arkadaşlarınla online ya da internetsiz botlara karşı oyna.",
+      free:"Ücretsiz · Türkçe ve İngilizce",
+      modesEyebrow:"İki oyun modu",modesTitle:"Çarp ya da gol at",
+      bumpTitle:"Çarpışma Savaşı",bumpText:"Rakiplerine çarp, kombo yap ve onları kenardan düşür. Zıplama rampaları, tehlikeler ve güçlendirmeler 9 arenada her maçı değiştirir.",
+      footTitle:"Mini Futbol",footText:"90 saniyelik maçlarda araba futbolu. Topu kaleye sür. Berabere biterse sıradaki gol kazandırır.",
+      trailerEyebrow:"İzle",trailerTitle:"Oyunu iş başında gör",trailerNote:"YouTube'da açılır.",
+      shotsEyebrow:"Bir göz at",shotsTitle:"Ekran görüntüleri",
+      insideEyebrow:"İçinde neler var",insideTitle:"Açılacak çok şey var",
+      f1t:"Kariyer",f1p:"Görevler ve yıldızlarla 29 aşama.",
+      f2t:"Arkadaşlarınla online",f2p:"Hızlı Oyun ya da arkadaşına oda koduyla özel oda.",
+      f3t:"Garaj",f3p:"16 araba, kaplamalar, lastik stilleri, izler, kasklar, kıyafetler ve şapkalar.",
+      f4t:"Futbol Kupası",f4p:"Grup aşaması, eleme turları ve altın gol.",
+      f5t:"Günlük görevler",f5p:"Günlük ve haftalık görevlerle her gün yeni bir hedef.",
+      f6t:"Adil online",f6p:"Kozmetikler yalnızca görseldir. Online maçlarda tüm arabalar aynı değerlerle yarışır.",
+      faqEyebrow:"Sorular",faqTitle:"Sıkça sorulan sorular",
+      q1:"Bumpbound ücretsiz mi?",a1:"Evet, oyun ücretsiz. Reklamlar ve isteğe bağlı uygulama içi satın almalar (coin paketleri, Reklamları Kaldır, premium kaplamalar) içerir. Ödüllü reklamlar her zaman isteğe bağlıdır.",
+      q2:"İnternetsiz oynayabilir miyim?",a2:"Evet. Kariyer, Futbol Kupası ve botlara karşı hızlı maçlar internetsiz çalışır. İnternet yalnızca online maçlar için gerekir.",
+      q3:"Arkadaşımla nasıl oynarım?",a3:"Online'ı aç, özel oda kur ve oda kodunu paylaş. Arkadaşın kodu girerek katılır.",
+      q4:"Online'da para verip avantaj alabilir miyim?",a4:"Hayır. Kozmetikler yalnızca arabanın görünüşünü değiştirir. Online maçlarda her araba aynı değerleri kullanır. Performans yükseltmeleri çevrimdışı oyun içindir.",
+      q5:"Yeni telefonda satın aldıklarımı nasıl geri alırım?",a5:"Aynı mağaza hesabıyla giriş yap ve Mağaza'daki Satın Alımları Geri Yükle'ye dokun.",
+      q6:"Size nasıl ulaşırım?",a6:"Bize yaz:",
+      ctaTitle:"Çarpışmaya hazır mısın?",privacy:"Gizlilik Politikası",contact:"İletişim",
+      inapp:"Mağaza açılmadı mı? Sağ üstteki <b>⋯</b> simgesine dokunup <b>Tarayıcıda aç</b>'ı seç.",playSmall:"HEMEN İNDİR",playBig:"Google Play",appSmall:"İndir",appBig:"App Store",soonSmall:"Yakında",
+      trailer:"https://www.youtube.com/watch?v=GjSOGnXOFcw"}
+  };
+
+  var PLAY_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0a0b1c" d="M4 2.5v19c0 .5.5.8.9.6L21 13c.4-.2.4-.8 0-1L4.9 1.9c-.4-.2-.9.1-.9.6z"/></svg>';
+  var APPLE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.6-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.2 1-4 2.5-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.2-.8s1.9.8 3.2.8c1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.6-1-2.6-4.1zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.6 2.8-1.4z"/></svg>';
+
+  function storesHtml(t){
+    var play = '<a class="store play" data-store="android" href="' + playHref + '"' + (isAndroid ? '' : ' target="_blank"') + ' rel="noopener">' + PLAY_ICON +
+      '<div><small>' + t.playSmall + '</small><span>' + t.playBig + '</span></div></a>';
+    var apple = APP_STORE_URL
+      ? '<a class="store apple" href="' + APP_STORE_URL + '" target="_blank" rel="noopener">' + APPLE_ICON + '<div><small>' + t.appSmall + '</small><span>' + t.appBig + '</span></div></a>'
+      : '<span class="store soon" aria-disabled="true">' + APPLE_ICON + '<div><small>' + t.soonSmall + '</small><span>' + t.appBig + '</span></div></span>';
+    // Put the visitor's own platform first.
+    return isIOS ? apple + play : play + apple;
+  }
+
+  function setLang(lang){
+    var t = I[lang] || I.en;
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){ var k = el.getAttribute("data-i18n"); if (t[k]) el.textContent = t[k]; });
+    document.querySelectorAll("[data-i18n-html]").forEach(function(el){ var k = el.getAttribute("data-i18n-html"); if (t[k]) el.innerHTML = t[k]; });
+    document.querySelectorAll("[data-stores]").forEach(function(el){ el.innerHTML = storesHtml(t); });
+    document.querySelectorAll("img[data-shot]").forEach(function(img){
+      var src = "img/shots/" + lang + "_" + img.getAttribute("data-shot") + ".jpg";
+      img.src = src; if (img.parentElement.tagName === "A") img.parentElement.href = src;
+    });
+    document.getElementById("trailer-img").src = "img/trailer_" + lang + ".jpg";
+    document.getElementById("trailer-link").href = t.trailer;
+    document.querySelectorAll(".lang button").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang)); });
+    try { localStorage.setItem("bb-lang", lang); } catch (e) {}
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem("bb-lang"); } catch (e) {}
+  var param = (location.search.match(/[?&]lang=(en|tr)/) || [])[1];
+  var initial = param || saved || ((navigator.language || "").toLowerCase().indexOf("tr") === 0 ? "tr" : "en");
+  document.querySelectorAll(".lang button").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); }); });
+  setLang(initial);
+  // In Instagram/TikTok on Android, show a hint if the Play Store app did not take over.
+  if (isAndroid && inApp) document.addEventListener("click", function(e){
+    if (e.target.closest && e.target.closest('a[data-store="android"]'))
+      setTimeout(function(){ document.getElementById("inapp").hidden = false; }, 1500);
+  });
+})();
+</script>
+</body>
+</html>
