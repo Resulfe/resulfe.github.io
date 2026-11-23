@@ -89,6 +89,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .hero-duo figure:last-child{border:2px solid var(--orange)}
 .hero-duo img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
 .hero-duo figcaption{position:absolute;left:12px;top:12px;padding:6px 14px;border-radius:999px;font-family:var(--display);font-size:18px;color:#0a0b1c}
+.hero-duo figure{background:var(--panel);text-align:left}
+.duo-text{padding:14px 18px 18px;color:var(--muted);font-size:16px}
 .tag-b{background:var(--blue)} .tag-o{background:var(--orange)}
 
 /* modes */
@@ -154,7 +156,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
   <div class="wrap">
     <a class="brand" href="#top"><img src="img/icon-64.png" alt="">Bumpbound</a>
     <nav class="nav">
-      <a href="#modes" data-i18n="navModes">Modes</a>
+      <a href="#football" data-i18n="navFoot">Football</a>
       <a href="#trailer" data-i18n="navTrailer">Trailer</a>
       <a href="#screens" data-i18n="navShots">Screenshots</a>
       <a href="#faq" data-i18n="navFaq">FAQ</a>
@@ -176,36 +178,12 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
     <p class="free" data-i18n="free">Free to play · English and Turkish</p>
     <p class="inapp" id="inapp" hidden data-i18n-html="inapp"></p>
     <div class="hero-duo">
-      <figure><img src="img/hero.jpg" alt="Bumper cars crashing in the neon arena while the crowd cheers" width="1600" height="900"><figcaption class="tag-b" data-i18n="duoBump">Bumper Battle</figcaption></figure>
-      <figure><img src="img/football/street_goal.jpg" alt="A goal on the Street Cage football pitch with confetti" width="1280" height="720"><figcaption class="tag-o" data-i18n="duoFoot">Mini Football</figcaption></figure>
+      <figure><img src="img/hero.jpg" alt="Bumper cars crashing in the neon arena while the crowd cheers" width="1600" height="900"><figcaption class="tag-b" data-i18n="duoBump">Bumper Battle</figcaption><div class="duo-text"><p data-i18n="bumpText">Ram rivals, chain combos and push them off the edge. Jump pads, hazards and power-ups change every fight across 9 arenas.</p></div></figure>
+      <figure><img src="img/football/street_goal.jpg" alt="A goal on the Street Cage football pitch with confetti" width="1280" height="720"><figcaption class="tag-o" data-i18n="duoFoot">Mini Football</figcaption><div class="duo-text"><p data-i18n="footText">Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.</p></div></figure>
     </div>
   </div>
 </section>
 
-<section id="modes">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow" data-i18n="modesEyebrow">Two ways to play</span>
-      <h2 data-i18n="modesTitle">Smash or score</h2>
-    </div>
-    <div class="modes">
-      <article class="mode bump">
-        <img src="img/shots/en_06.jpg" data-shot="06" alt="" loading="lazy">
-        <div>
-          <h3 data-i18n="bumpTitle">Bumper Battle</h3>
-          <p data-i18n="bumpText">Ram rivals, chain combos and push them off the edge. Jump pads, hazards and power-ups change every fight across 9 arenas.</p>
-        </div>
-      </article>
-      <article class="mode foot">
-        <img src="img/shots/en_04.jpg" data-shot="04" alt="" loading="lazy">
-        <div>
-          <h3 data-i18n="footTitle">Mini Football</h3>
-          <p data-i18n="footText">Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
 
 <section id="football">
   <div class="wrap">
@@ -215,7 +193,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
       <p data-i18n="fbLede">Play on the Street Cage between brick walls and shipping containers. Every goal ends in a show.</p>
     </div>
     <div class="fgal">
-      <figure><img src="img/football/street_goal.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capGoal">Goal!</span></figcaption></figure>
+      <figure><img src="img/football/street_attack.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capGoal">Attack the goal</span></figcaption></figure>
       <figure><img src="img/football/street_duel.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capDuel">Fight for the ball</span></figcaption></figure>
       <figure><img src="img/football/street_shock.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capShock">Power-ups on the pitch</span></figcaption></figure>
       <figure><img src="img/football/street_fireworks.jpg" alt="" loading="lazy" width="1280" height="720"><figcaption><b>STREET CAGE</b> · <span data-i18n="capFire">Goal celebration</span></figcaption></figure>
@@ -334,14 +312,14 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
     : playWeb;
 
   var I = {
-    en:{navModes:"Modes",navTrailer:"Trailer",navShots:"Screenshots",navFaq:"FAQ",
+    en:{navFoot:"Football",navTrailer:"Trailer",navShots:"Screenshots",navFaq:"FAQ",
       heroTitle:'<span class="b">Bump</span> your rivals. <span class="o">Score</span> with your car.',
       heroLede:"Bumper car battles and car football in short, loud, physical matches. Play online with friends or offline against bots.",
       free:"Free to play · English and Turkish",
       duoBump:"Bumper Battle",duoFoot:"Mini Football",modesEyebrow:"Two ways to play",modesTitle:"Smash or score",
       bumpTitle:"Bumper Battle",bumpText:"Ram rivals, chain combos and push them off the edge. Jump pads, hazards and power-ups change every fight across 9 arenas.",
       footTitle:"Mini Football",footText:"Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.",
-      fbEyebrow:"Car football",fbTitle:"Goals, crashes, fireworks",fbLede:"Play on the Street Cage between brick walls and shipping containers. Every goal ends in a show.",capGoal:"Goal!",capDuel:"Fight for the ball",capShock:"Power-ups on the pitch",capFire:"Goal celebration",
+      fbEyebrow:"Car football",fbTitle:"Goals, crashes, fireworks",fbLede:"Play on the Street Cage between brick walls and shipping containers. Every goal ends in a show.",capGoal:"Attack the goal",capDuel:"Fight for the ball",capShock:"Power-ups on the pitch",capFire:"Goal celebration",
       trailerEyebrow:"Watch",trailerTitle:"See it in motion",trailerNote:"Opens on YouTube.",
       shotsEyebrow:"Take a look",shotsTitle:"Screenshots",
       insideEyebrow:"What's inside",insideTitle:"Plenty to unlock",
@@ -361,14 +339,14 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
       ctaTitle:"Ready to bump?",privacy:"Privacy Policy",contact:"Contact",
       inapp:"Store didn't open? Tap <b>⋯</b> at the top right and choose <b>Open in browser</b>.",playSmall:"GET IT ON",playBig:"Google Play",appSmall:"Download on the",appBig:"App Store",soonSmall:"Coming soon to the",
       trailer:"https://www.youtube.com/watch?v=qAJTwwfwYL8"},
-    tr:{navModes:"Modlar",navTrailer:"Fragman",navShots:"Görseller",navFaq:"SSS",
+    tr:{navFoot:"Futbol",navTrailer:"Fragman",navShots:"Görseller",navFaq:"SSS",
       heroTitle:'Rakiplerine <span class="b">çarp</span>. Arabanla <span class="o">gol at</span>.',
       heroLede:"Kısa, gürültülü ve fiziksel maçlarda çarpışan araba savaşları ve araba futbolu. Arkadaşlarınla online ya da internetsiz botlara karşı oyna.",
       free:"Ücretsiz · Türkçe ve İngilizce",
       duoBump:"Çarpışma Savaşı",duoFoot:"Mini Futbol",modesEyebrow:"İki oyun modu",modesTitle:"Çarp ya da gol at",
       bumpTitle:"Çarpışma Savaşı",bumpText:"Rakiplerine çarp, kombo yap ve onları kenardan düşür. Zıplama rampaları, tehlikeler ve güçlendirmeler 9 arenada her maçı değiştirir.",
       footTitle:"Mini Futbol",footText:"90 saniyelik maçlarda araba futbolu. Topu kaleye sür. Berabere biterse sıradaki gol kazandırır.",
-      fbEyebrow:"Araba futbolu",fbTitle:"Goller, çarpışmalar, havai fişekler",fbLede:"Tuğla duvarlar ve konteynerler arasındaki Sokak Kafesi'nde oyna. Her gol bir şova dönüşür.",capGoal:"Gol!",capDuel:"Top için kapış",capShock:"Sahada güçlendirmeler",capFire:"Gol kutlaması",
+      fbEyebrow:"Araba futbolu",fbTitle:"Goller, çarpışmalar, havai fişekler",fbLede:"Tuğla duvarlar ve konteynerler arasındaki Sokak Kafesi'nde oyna. Her gol bir şova dönüşür.",capGoal:"Kaleye hücum",capDuel:"Top için kapış",capShock:"Sahada güçlendirmeler",capFire:"Gol kutlaması",
       trailerEyebrow:"İzle",trailerTitle:"Oyunu iş başında gör",trailerNote:"YouTube'da açılır.",
       shotsEyebrow:"Bir göz at",shotsTitle:"Ekran görüntüleri",
       insideEyebrow:"İçinde neler var",insideTitle:"Açılacak çok şey var",
