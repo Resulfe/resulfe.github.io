@@ -82,7 +82,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .store.soon:hover{transform:none}
 .free{font-weight:700;color:var(--muted);font-size:15px}
 .inapp{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:14px;color:var(--muted);max-width:460px}
-.hero-shot{width:min(980px,100%);height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:22px;border:2px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 6px rgba(46,197,255,.06)}
+.hero-duo{width:min(1120px,100%);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.hero-duo{grid-template-columns:1fr;gap:12px}}
+.hero-duo figure{margin:0;position:relative;border-radius:20px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.55)}
+.hero-duo figure:first-child{border:2px solid var(--blue)}
+.hero-duo figure:last-child{border:2px solid var(--orange)}
+.hero-duo img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.hero-duo figcaption{position:absolute;left:12px;top:12px;padding:6px 14px;border-radius:999px;font-family:var(--display);font-size:18px;color:#0a0b1c}
+.tag-b{background:var(--blue)} .tag-o{background:var(--orange)}
 
 /* modes */
 .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:22px}
@@ -168,7 +175,10 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
     <div class="stores" data-stores></div>
     <p class="free" data-i18n="free">Free to play · English and Turkish</p>
     <p class="inapp" id="inapp" hidden data-i18n-html="inapp"></p>
-    <img class="hero-shot" src="img/hero.jpg" alt="Four bumper cars crashing in the neon arena while the crowd cheers" width="1600" height="900">
+    <div class="hero-duo">
+      <figure><img src="img/hero.jpg" alt="Bumper cars crashing in the neon arena while the crowd cheers" width="1600" height="900"><figcaption class="tag-b" data-i18n="duoBump">Bumper Battle</figcaption></figure>
+      <figure><img src="img/football/street_goal.jpg" alt="A goal on the Street Cage football pitch with confetti" width="1280" height="720"><figcaption class="tag-o" data-i18n="duoFoot">Mini Football</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -328,7 +338,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
       heroTitle:'<span class="b">Bump</span> your rivals. <span class="o">Score</span> with your car.',
       heroLede:"Bumper car battles and car football in short, loud, physical matches. Play online with friends or offline against bots.",
       free:"Free to play · English and Turkish",
-      modesEyebrow:"Two ways to play",modesTitle:"Smash or score",
+      duoBump:"Bumper Battle",duoFoot:"Mini Football",modesEyebrow:"Two ways to play",modesTitle:"Smash or score",
       bumpTitle:"Bumper Battle",bumpText:"Ram rivals, chain combos and push them off the edge. Jump pads, hazards and power-ups change every fight across 9 arenas.",
       footTitle:"Mini Football",footText:"Car football in 90-second matches. Drive the ball into the goal. If it is a draw, the next goal wins.",
       fbEyebrow:"Car football",fbTitle:"Goals, crashes, fireworks",fbLede:"Play on the Street Cage between brick walls and shipping containers. Every goal ends in a show.",capGoal:"Goal!",capDuel:"Fight for the ball",capShock:"Power-ups on the pitch",capFire:"Goal celebration",
@@ -355,7 +365,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px 22px;margin-left:auto}
       heroTitle:'Rakiplerine <span class="b">çarp</span>. Arabanla <span class="o">gol at</span>.',
       heroLede:"Kısa, gürültülü ve fiziksel maçlarda çarpışan araba savaşları ve araba futbolu. Arkadaşlarınla online ya da internetsiz botlara karşı oyna.",
       free:"Ücretsiz · Türkçe ve İngilizce",
-      modesEyebrow:"İki oyun modu",modesTitle:"Çarp ya da gol at",
+      duoBump:"Çarpışma Savaşı",duoFoot:"Mini Futbol",modesEyebrow:"İki oyun modu",modesTitle:"Çarp ya da gol at",
       bumpTitle:"Çarpışma Savaşı",bumpText:"Rakiplerine çarp, kombo yap ve onları kenardan düşür. Zıplama rampaları, tehlikeler ve güçlendirmeler 9 arenada her maçı değiştirir.",
       footTitle:"Mini Futbol",footText:"90 saniyelik maçlarda araba futbolu. Topu kaleye sür. Berabere biterse sıradaki gol kazandırır.",
       fbEyebrow:"Araba futbolu",fbTitle:"Goller, çarpışmalar, havai fişekler",fbLede:"Tuğla duvarlar ve konteynerler arasındaki Sokak Kafesi'nde oyna. Her gol bir şova dönüşür.",capGoal:"Gol!",capDuel:"Top için kapış",capShock:"Sahada güçlendirmeler",capFire:"Gol kutlaması",
